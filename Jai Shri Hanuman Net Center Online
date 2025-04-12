@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jai Shri Hanuman Net Centre Online</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Updated Color Palette */
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: linear-gradient(to right, #e0f7fa, #ffe0b2);
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: #3f51b5;
+      color: #ffffff;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+    }
+    .card {
+      background: #ffffffdd;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 400px;
+      border-radius: 20px;
+      border: 1px solid #90caf9;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    input, button {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #90caf9;
+      font-size: 16px;
+    }
+    input {
+      background-color: #e3f2fd;
+    }
+    button {
+      background-color: #009688;
+      color: #ffffff;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00796b;
+    }
+    .hidden {
+      display: none;
+    }
+    .links a {
+      display: block;
+      background: #f0f0f0;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      border: 1px solid #c5cae9;
+    }
+    .links a:hover {
+      background-color: #e0e0e0;
+    }
+    .upi-box {
+      background: #fff9c4;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ffecb3;
+    }
+    .qr-image {
+      max-width: 200px;
+      margin: 10px auto;
+      display: block;
+    }
+    .thank-you {
+      color: #388e3c;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    /* Styles for the source viewer overlay */
+    #sourceOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      overflow: auto;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 9999;
+      display: none;
+    }
+    #sourceOverlay textarea {
+      width: 100%;
+      height: 80%;
+      background: #333;
+      color: #0f0;
+      border: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    #sourceOverlay button {
+      background-color: #d32f2f;
+      color: #fff;
+      margin-top: 10px;
+    }
+  </style>
+  <script>
+    var userMobile = "";
+    
+    function login() {
+      var pass = document.getElementById("password").value;
+      var mob = document.getElementById("mobile").value.trim();
+      if (pass === "Basuh@058" && mob.length >= 10) {
+        userMobile = mob;
+        // Update PhonePe link with the login mobile number
+        document.getElementById("phonepeLink").href = 
+          "upi://pay?pa=966377986@ybl&pn=" + encodeURIComponent(userMobile) + "&am=50&cu=INR";
+        // Show payment card and hide login card
+        document.getElementById("loginCard").classList.add("hidden");
+        document.getElementById("paymentCard").classList.remove("hidden");
+        // Show the 'View HTML Source' button only if mobile is 9663779863
+        if(userMobile === "9663779863") {
+          document.getElementById("sourceButtonContainer").classList.remove("hidden");
+        } else {
+          document.getElementById("sourceButtonContainer").classList.add("hidden");
+        }
+      } else {
+        alert("Incorrect mobile number or password");
+      }
+    }
+    
+    function submitTxn() {
+      var txn = document.getElementById("txnId").value.trim();
+      if (txn.length >= 9) {
+        document.getElementById("txnDisplay").innerText = txn;
+        document.getElementById("paymentCard").classList.add("hidden");
+        document.getElementById("serviceCard").classList.remove("hidden");
+      } else {
+        alert("Please enter a valid UPI Transaction ID (minimum 9 digits)");
+      }
+    }
+    
+    // Function to show HTML source code only if correct password is entered
+    function viewSource() {
+      var pwd = prompt("Enter password to view HTML source code:");
+      if (pwd === "Basayya@058") {
+        var source = document.documentElement.outerHTML;
+        document.getElementById("sourceContent").value = source;
+        document.getElementById("sourceOverlay").style.display = "block";
+      } else {
+        alert("Incorrect password. Access denied.");
+      }
+    }
+    
+    function closeSource() {
+      document.getElementById("sourceOverlay").style.display = "none";
+    }
+  </script>
+</head>
+<body>
+  <div class="header">Jai Shri Hanuman Net Centre Online</div>
+  
+  <!-- Login Card -->
+  <div class="card" id="loginCard">
+    <h2>Login Page</h2>
+    <input type="text" id="mobile" placeholder="Mobile Number">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+  
+  <!-- Payment Card -->
+  <div class="card hidden" id="paymentCard">
+    <h2>Pay ₹50 to Access Services</h2>
+    <div class="upi-box">
+      <p><strong>Pay via UPI:</strong></p>
+      <p><strong style="color:#2e7d32; font-size:18px;">966377986@ybl</strong></p>
+      <img class="qr-image" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=upi://pay?pa=966377986@ybl&pn=Basayya&am=50" alt="PhonePe QR Code">
+      <input type="text" id="txnId" placeholder="Enter UPI Transaction ID">
+      <button onclick="submitTxn()">I Have Paid ₹50</button>
+      <a id="phonepeLink" href="upi://pay?pa=966377986@ybl&pn=Basayya&am=50&cu=INR" target="_blank" style="text-decoration:none;">
+        <button style="background-color:#673ab7;">Pay ₹50 via PhonePe</button>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Service Card -->
+  <div class="card hidden" id="serviceCard">
+    <h2>✅ Access Granted</h2>
+    <p><strong>Your UPI Transaction ID:</strong> <span id="txnDisplay"></span></p>
+    <h3>Available Services</h3>
+    <div class="links">
+      <a href="https://ajsk.karnataka.gov.in/NK5_Online/Login/Login_Public" target="_blank">🏛 Income Caste Registration</a>
+      <a href="https://voters.eci.gov.in/" target="_blank">🗳 New Voter Portal</a>
+      <a href="https://www.pan.utiitsl.com/newA.html" target="_blank">🧾 UTI PAN Card</a>
+      <a href="https://www.freejobalert.com/latest-notifications/" target="_blank">🧑‍💼 Free Job Alerts</a>
+      <a href="https://ssp.postmatric.karnataka.gov.in/homepage.aspx" target="_blank">🎓 SSP Post Matric Scholarship</a>
+      <a href="https://rtc.karnataka.gov.in/service78/" target="_blank">📜 RTC Services</a>
+      <a href="https://kaveri.karnataka.gov.in/landing-page" target="_blank">🏠 New Kaveri Services</a>
+      <a href="https://uidai.gov.in" target="_blank">🔐 Aadhar Services</a>
+      <a href="https://ahara.karnataka.gov.in/Home/Home" target="_blank">🍚 Ahara Karnataka</a>
+      <a href="https://ahara.karnataka.gov.in/FCS_VERIFY_MSER/" target="_blank">📄 Ahara Verify</a>
+      <a href="https://abha.abdm.gov.in/abha/v3/login" target="_blank">🩺 ABHA Health ID</a>
+      <a href="https://register.eshram.gov.in/#/user/self" target="_blank">👷 eShram Registration</a>
+      <a href="https://sevasindhu.karnataka.gov.in" target="_blank">🧾 Janasnehi Services</a>
+      <a href="https://ksouportal.com/views/CertificateHome.aspx" target="_blank">🎓 Ksou Portal Certificates</a>
+    </div>
+    <div class="thank-you">🙏 Thank You For Payment. Jai Shree Hanuman 🙏</div>
+  </div>
+  
+  <!-- Container for the source viewer button (only shown for mobile number 9663779863) -->
+  <div class="card hidden" id="sourceButtonContainer">
+    <button onclick="viewSource()" style="background-color:#d32f2f;">View HTML Source (Restricted)</button>
+  </div>
+  
+  <!-- Overlay for displaying source code -->
+  <div id="sourceOverlay">
+    <h2>HTML Source Code</h2>
+    <textarea id="sourceContent" readonly></textarea>
+    <br>
+    <button onclick="closeSource()">Close</button>
+  </div>
+</body>
+</html>
